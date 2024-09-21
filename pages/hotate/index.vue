@@ -2,7 +2,6 @@
   <div class="profile-container">
     <div class="photo-section">
       <div class="slider">
-        {{ imgSrc }}
         <img
           src="@/assets/dummy/dummy_1.jpg"
           alt="迷子犬の写真"
