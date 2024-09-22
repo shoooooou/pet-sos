@@ -54,9 +54,12 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const uid = config.public.sendLineTargetUserid;
   const accessToken = config.public.petSosChannnelToken;
-  
+
+  console.log("uid", uid === undefined);
+  console.log("accessToken", accessToken === undefined);
+
   const { pageTitle, message, isIncludeLocation, latitude, longitude } =
-  await readBody(event);
+    await readBody(event);
   const messages: Message[] = createMessages(
     pageTitle,
     message,
