@@ -53,7 +53,7 @@
           placeholder="メッセージを入力してください"
         ></textarea>
         <label>
-          <input type="checkbox" v-model="includeLocation" /> 現在地情報を送信しても問題ない場合はチェックしてください
+          <input type="checkbox" v-model="isIncludeLocation" /> 現在地情報を送信しても問題ない場合はチェックしてください
         </label>
         <div class="modal-buttons">
           <button class="send-button" @click="sendMessage">送信</button>
@@ -70,7 +70,7 @@ import { ref } from "vue";
 
 const showModal = ref(false);
 const message = ref("");
-const includeLocation = ref(false);
+const isIncludeLocation = ref(false);
 
 const openModal = () => {
   showModal.value = true;
@@ -87,9 +87,9 @@ const sendMessage = async () => {
   }
   await axios.post("/sendLineMessage", {
     message: message.value,
-    includeLocation: includeLocation.value,
+    Location: isIncludeLocation.value,
   });
-  alert(`送信完了しました！ メッセージ: ${message.value} 現在地情報: ${includeLocation.value}`);
+  alert(`送信完了しました！ メッセージ: ${message.value} 現在地情報: ${isIncludeLocation.value}`);
 };
 </script>
 
