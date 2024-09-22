@@ -50,10 +50,11 @@
         </aside>
         <textarea
           v-model="message"
-          placeholder="メッセージを入力してください"
+          placeholder="お伝えできる連絡先を提示していただけますと幸いです！"
         ></textarea>
         <label>
-          <input type="checkbox" v-model="isIncludeLocation" /> 現在地情報を送信しても問題ない場合はチェックしてください
+          <input type="checkbox" v-model="isIncludeLocation" />
+          現在地情報を送信しても問題ない場合はチェックしてください
         </label>
         <div class="modal-buttons">
           <button class="send-button" @click="sendMessage">送信</button>
@@ -85,11 +86,25 @@ const sendMessage = async () => {
     alert("メッセージを入力してください");
     return;
   }
+  let latitude: number | null = null;
+  let longitude: number | null = null;
+  if (isIncludeLocation.value) {
+    const location = await getCurrentLocation();
+    console.log(`現在地情報: ${location.latitude}, ${location.longitude}`);
+    latitude = location.latitude;
+    longitude = location.longitude;
+  }
+  
   await axios.post("/sendLineMessage", {
+    pageTitle: "ほたて",
     message: message.value,
-    Location: isIncludeLocation.value,
+    isIncludeLocation: isIncludeLocation.value,
+    latitude: isIncludeLocation.value ? latitude : null,
+    longitude: isIncludeLocation.value ? longitude : null,
   });
-  alert(`送信完了しました！ メッセージ: ${message.value} 現在地情報: ${isIncludeLocation.value}`);
+  alert(
+    `送信完了しました！ メッセージ: ${message.value} 現在地情報: ${isIncludeLocation.value}`
+  );
 };
 </script>
 
@@ -205,7 +220,7 @@ body {
   max-width: 400px;
   border-radius: 5px;
 }
-.modal-content p{
+.modal-content p {
   font-size: 12px;
 }
 
