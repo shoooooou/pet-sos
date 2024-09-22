@@ -65,6 +65,7 @@
 </template>
 
 <script setup lang="ts">
+import axios from "axios";
 import { ref } from "vue";
 
 const showModal = ref(false);
@@ -79,11 +80,15 @@ const closeModal = () => {
   showModal.value = false;
 };
 
-const sendMessage = () => {
+const sendMessage = async () => {
   if (!message.value) {
     alert("メッセージを入力してください");
     return;
   }
+  await axios.post("/sendLineMessage", {
+    message: message.value,
+    includeLocation: includeLocation.value,
+  });
   alert(`送信完了しました！ メッセージ: ${message.value} 現在地情報: ${includeLocation.value}`);
 };
 </script>
