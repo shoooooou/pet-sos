@@ -1,0 +1,31 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main  # メインブランチにプッシュされた時に実行
+  pull_request:
+    branches:
+      - main  # プルリクエストの際にも実行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'  # 使用するNode.jsのバージョン
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run build
+      run: npm run build
+
+    # - name: Run tests
+    #   run: npm run test # テストも実行する場合
