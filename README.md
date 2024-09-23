@@ -1,75 +1,40 @@
-# Nuxt 3 Minimal Starter
+# 【レイアウト開発中】ペットSOSページ
+![alt text](image-1.png)
+## 概要
+ペットSOSページは、迷子になったペットを見つけるための支援を行うウェブアプリケーションです。ユーザーはペットの情報を登録し、ページURLのQRコードのキーホルダー等を作成し、ペットに身につけることで万が一迷子になられても保護してくれた方から連絡を取ることができます。
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## 特徴
+- **ペット情報の登録**: ペットの名前、種類、特徴、写真などを表示できます。
+- **位置情報の共有**: 保護してくれた方がメッセージを送信してくれた場所の情報を共有することができます。
 
-## Setup
+## 技術
+### スタック
 
-Make sure to install the dependencies:
+[![My Skills](https://skillicons.dev/icons?i=nuxt,nodejs,ts)](https://skillicons.dev)
 
+## インストール
+以下の手順でプロジェクトをローカル環境にインストールします。
+
+1. リポジトリをクローンします。
+    ```bash
+    git clone https://github.com/yourusername/pet-sos.git
+    ```
+2. プロジェクトディレクトリに移動します。
+    ```bash
+    cd pet-sos
+    ```
+3. 必要な依存関係をインストールします。
+    ```bash
+    npm install
+    ```
+
+## 使用方法
+### 環境変数
+今アプリケーションでは２種類の環境変数を使用しています。
+- PET_SOS_CHANNEL_TOKEN:LINEMessageAPIのアクセストークン
+- SEND_LINE_TARGET_USERID:宛先のUID
+### 起動方法
+開発サーバーを起動し、アプリケーションをローカルで確認します。
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
