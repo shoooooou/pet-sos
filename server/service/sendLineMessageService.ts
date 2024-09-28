@@ -1,4 +1,4 @@
-import { TextMessage, Message, LocationMessage } from "@/server/routes/sendLineMessage.post";
+import type { TextMessage, Message, LocationMessage } from "@/server/routes/sendLineMessage.post";
 
 export default class SendLineMessageService {
   /*
@@ -36,13 +36,16 @@ export default class SendLineMessageService {
     pageTitle: string,
     message: string,
     isIncludeLocation: boolean,
-    latitude: number,
-    longitude: number
+    latitude?: number,
+    longitude?: number
   ): Message[] => {
     const greetMassage: TextMessage = this.createGreetTextMessage(pageTitle);
     const contentMessage: TextMessage = this.createTextMessage(message);
     const messages: Message[] = [greetMassage, contentMessage];
     if (isIncludeLocation) {
+      if(!latitude || !longitude) {
+        throw new Error("緯度経度が取得できていません。");
+      }
       const locationMessage: LocationMessage = {
         type: "location",
         title: "メッセージ送信者の位置情報",
