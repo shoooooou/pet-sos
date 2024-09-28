@@ -2,10 +2,12 @@ import axios from "axios";
 interface Message {
   type: "text" | "location";
 }
+// LINEのテキストメッセージ
 interface TextMessage extends Message {
   type: "text";
   text: string;
 }
+// LINEの位置情報メッセージ
 interface LocationMessage extends Message {
   type: "location";
   title: string;
@@ -13,12 +15,22 @@ interface LocationMessage extends Message {
   latitude: number;
   longitude: number;
 }
+/*
+  * 1通目のメッセージを作成する
+  * @param pageTitle ページ名(ペットの名前)
+  * @returns TextMessage LINEのテキストメッセージ
+*/
 const createGreetTextMessage = (pageTitle: string): TextMessage => {
   return {
     type: "text",
     text: `${pageTitle}のSOSページから連絡がありました！`,
   };
 };
+/*
+  * 2通目のメッセージを作成する
+  * @param message 送信者が入力したメッセージ
+  * @returns TextMessage LINEのテキストメッセージ
+*/
 const createTextMessage = (message: string): TextMessage => {
   return {
     type: "text",
@@ -26,6 +38,15 @@ const createTextMessage = (message: string): TextMessage => {
   };
 };
 
+/*
+  * LINE Message APIにのリクエストボディを作成する
+  * @param pageTitle ページのタイトル
+  * @param message メッセージ
+  * @param isIncludeLocation 位置情報を含むかどうか
+  * @param latitude 緯度
+  * @param longitude 経度
+  * @returns Message[] LINE Message APIのリクエストボディ
+*/
 const createMessages = (
   pageTitle: string,
   message: string,
@@ -36,7 +57,6 @@ const createMessages = (
   const greetMassage: TextMessage = createGreetTextMessage(pageTitle);
   const contentMessage: TextMessage = createTextMessage(message);
   const messages: Message[] = [greetMassage, contentMessage];
-  // TODO: 位置情報を取得する処理に置き換える
   if (isIncludeLocation) {
     const locationMessage: LocationMessage = {
       type: "location",
@@ -51,12 +71,10 @@ const createMessages = (
 };
 
 export default defineEventHandler(async (event) => {
+  // 環境変数からトークンと宛先のユーザIDを取得
   const config = useRuntimeConfig();
   const uid = config.public.sendLineTargetUserid;
   const accessToken = config.public.petSosChannnelToken;
-
-  console.log("uid", uid === undefined);
-  console.log("accessToken", accessToken === undefined);
 
   const { pageTitle, message, isIncludeLocation, latitude, longitude } =
     await readBody(event);
@@ -67,7 +85,7 @@ export default defineEventHandler(async (event) => {
     latitude,
     longitude
   );
-  console.log(messages);
+  // console.log(messages);
   const response = await axios.post(
     "https://api.line.me/v2/bot/message/push",
     {
