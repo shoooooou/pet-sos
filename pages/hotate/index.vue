@@ -85,6 +85,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref } from "vue";
+import { getCurrentLocation } from "@/server/utils/geolocation";
 
 interface isSendLineText {
   title: string;
