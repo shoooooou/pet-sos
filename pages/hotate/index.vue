@@ -1,5 +1,7 @@
 <template>
   <div class="profile-container">
+    <!-- TODO: コンポーネント化 -->
+    <!-- TODO: v-forで実装できるようにする -->
     <div class="photo-section">
       <div class="slider">
         <img
@@ -39,6 +41,7 @@
     </div>
 
     <!-- Modal -->
+    <!-- TODO: コンポーネント化 -->
     <div class="modal" v-if="showSendLineModal">
       <div class="modal-content">
         <span class="close" @click="closeSendLineModal">&times;</span>
