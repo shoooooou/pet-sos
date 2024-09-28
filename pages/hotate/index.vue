@@ -39,9 +39,9 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal" v-if="showModal">
+    <div class="modal" v-if="showSendLineModal">
       <div class="modal-content">
-        <span class="close" @click="closeModal">&times;</span>
+        <span class="close" @click="closeSendLineModal">&times;</span>
         <h2>LINE経由でメッセージを送信</h2>
         <aside>
           <p>
@@ -58,7 +58,21 @@
         </label>
         <div class="modal-buttons">
           <button class="send-button" @click="sendMessage">送信</button>
-          <button class="cancel-button" @click="closeModal">キャンセル</button>
+          <button class="cancel-button" @click="closeSendLineModal">
+            キャンセル
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal" v-if="showIsSendLineModal">
+      <div class="modal-content">
+        <span class="close" @click="closeIsSendLineModal">&times;</span>
+        <h2>{{ isSendLineText.title }}</h2>
+        <p>{{ isSendLineText.content }}</p>
+        <div class="modal-buttons">
+          <button class="cancel-button" @click="closeIsSendLineModal">
+            閉じる
+          </button>
         </div>
       </div>
     </div>
@@ -69,16 +83,27 @@
 import axios from "axios";
 import { ref } from "vue";
 
-const showModal = ref(false);
+interface isSendLineText {
+  title: string;
+  content: string;
+}
+
+const showSendLineModal = ref(false);
+const showIsSendLineModal = ref(false);
 const message = ref("");
 const isIncludeLocation = ref(false);
+const isSendLineText = ref<isSendLineText>({ title: "", content: "" });
 
 const openModal = () => {
-  showModal.value = true;
+  showSendLineModal.value = true;
 };
 
-const closeModal = () => {
-  showModal.value = false;
+const closeSendLineModal = () => {
+  showSendLineModal.value = false;
+};
+
+const closeIsSendLineModal = () => {
+  showIsSendLineModal.value = false;
 };
 
 const sendMessage = async () => {
@@ -94,17 +119,29 @@ const sendMessage = async () => {
     latitude = location.latitude;
     longitude = location.longitude;
   }
-  
-  await axios.post("/sendLineMessage", {
-    pageTitle: "ほたて",
-    message: message.value,
-    isIncludeLocation: isIncludeLocation.value,
-    latitude: isIncludeLocation.value ? latitude : null,
-    longitude: isIncludeLocation.value ? longitude : null,
-  });
-  alert(
-    `送信完了しました！ メッセージ: ${message.value} 現在地情報: ${isIncludeLocation.value}`
-  );
+  try {
+    await axios.post("/sendLineMessage", {
+      pageTitle: "ほたて",
+      message: message.value,
+      isIncludeLocation: isIncludeLocation.value,
+      latitude: isIncludeLocation.value ? latitude : null,
+      longitude: isIncludeLocation.value ? longitude : null,
+    });
+    isSendLineText.value = {
+      title: "送信完了",
+      content: "飼い主へLINEメッセージを送信しました！",
+    };
+  } catch (e) {
+    isSendLineText.value = {
+      title: "送信失敗",
+      content: "飼い主へLINEメッセージが送れませんでした！",
+    };
+  }finally{
+    showSendLineModal.value = false;
+    showIsSendLineModal.value = true;
+    message.value = "";
+    isIncludeLocation.value = false;
+  }
 };
 </script>
 
