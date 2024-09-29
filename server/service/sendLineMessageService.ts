@@ -1,7 +1,11 @@
-import type { TextMessage, Message, LocationMessage } from "@/server/routes/sendLineMessage.post";
+import type {
+  LocationMessage,
+  Message,
+  TextMessage,
+} from "@/server/routes/sendLineMessage.post";
 
 export default class SendLineMessageService {
-  /*
+  /**
    * 1通目のメッセージを作成する
    * @param pageTitle ページ名(ペットの名前)
    * @returns TextMessage LINEのテキストメッセージ
@@ -12,7 +16,7 @@ export default class SendLineMessageService {
       text: `${pageTitle}のSOSページから連絡がありました！`,
     };
   };
-  /*
+  /**
    * 2通目のメッセージを作成する
    * @param message 送信者が入力したメッセージ
    * @returns TextMessage LINEのテキストメッセージ
@@ -23,7 +27,7 @@ export default class SendLineMessageService {
       text: message,
     };
   };
-  /*
+  /**
    * LINE Message APIにのリクエストボディを作成する
    * @param pageTitle ページのタイトル
    * @param message メッセージ
@@ -43,7 +47,7 @@ export default class SendLineMessageService {
     const contentMessage: TextMessage = this.createTextMessage(message);
     const messages: Message[] = [greetMassage, contentMessage];
     if (isIncludeLocation) {
-      if(!latitude || !longitude) {
+      if (!latitude || !longitude) {
         throw new Error("緯度経度が取得できていません。");
       }
       const locationMessage: LocationMessage = {
