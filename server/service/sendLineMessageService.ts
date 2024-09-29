@@ -6,7 +6,7 @@ import type {
 
 export default class SendLineMessageService {
   /**
-   * 1通目のメッセージを作成する
+   * どのペットのページから送信されたかのメッセージを作成する
    * @param pageTitle ページ名(ペットの名前)
    * @returns TextMessage LINEのテキストメッセージ
    */
@@ -17,7 +17,7 @@ export default class SendLineMessageService {
     };
   };
   /**
-   * 2通目のメッセージを作成する
+   * メッセージを作成する
    * @param message 送信者が入力したメッセージ
    * @returns TextMessage LINEのテキストメッセージ
    */
