@@ -1,21 +1,7 @@
 import axios from "axios";
 import SendLineMessageService from "../service/sendLineMessageService";
-export interface Message {
-  type: "text" | "location";
-}
-// LINEのテキストメッセージ
-export interface TextMessage extends Message {
-  type: "text";
-  text: string;
-}
-// LINEの位置情報メッセージ
-export interface LocationMessage extends Message {
-  type: "location";
-  title: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-}
+import { Message } from "~/types/lineMessages";
+
 const sendLineMessageService = new SendLineMessageService();
 
 export default defineEventHandler(async (event) => {

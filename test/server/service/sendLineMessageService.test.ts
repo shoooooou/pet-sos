@@ -1,9 +1,6 @@
-import type {
-  LocationMessage,
-  TextMessage,
-} from "@/server/routes/sendLineMessage.post";
 import SendLineMessageService from "@/server/service/sendLineMessageService";
 import { beforeAll, describe, expect, it } from "vitest";
+import type { LocationMessage, TextMessage } from "~/types/lineMessages";
 
 describe("SendLineMessageService", () => {
   let service: SendLineMessageService;

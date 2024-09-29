@@ -2,7 +2,7 @@ import type {
   LocationMessage,
   Message,
   TextMessage,
-} from "@/server/routes/sendLineMessage.post";
+} from "@/types/lineMessages";
 
 export default class SendLineMessageService {
   /**
@@ -28,7 +28,7 @@ export default class SendLineMessageService {
     };
   };
   /**
-   * LINE Message APIにのリクエストボディを作成する
+   * LINE Message API用のリクエストボディを作成する
    * @param pageTitle ページのタイトル
    * @param message メッセージ
    * @param isIncludeLocation 位置情報を含むかどうか
